@@ -116,6 +116,85 @@
     return div;
   }
 
+  // ── Markdown rendering ─────────────────────────────────────────────────────
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function parseTimestamp(ts) {
+    const parts = ts.split(":").map(Number);
+    if (parts.some((n) => Number.isNaN(n))) return null;
+    if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    if (parts.length === 2) return parts[0] * 60 + parts[1];
+    return null;
+  }
+
+  function inlineMarkdown(s) {
+    // links [text](url)
+    s = s.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+    // bold **text**
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    // italic *text*
+    s = s.replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, "$1<em>$2</em>");
+    // clickable timestamps (m:ss or h:mm:ss)
+    s = s.replace(
+      /\b(\d{1,2}:\d{2}(?::\d{2})?)\b/g,
+      '<a class="vw-ts" data-ts="$1">$1</a>'
+    );
+    return s;
+  }
+
+  function renderMarkdown(text) {
+    const lines = escapeHtml(text).split("\n");
+    let html = "";
+    let inList = false;
+    for (const raw of lines) {
+      const line = raw.trim();
+      const bullet = line.match(/^[*-]\s+(.*)$/);
+      if (bullet) {
+        if (!inList) { html += "<ul>"; inList = true; }
+        html += "<li>" + inlineMarkdown(bullet[1]) + "</li>";
+        continue;
+      }
+      if (inList) { html += "</ul>"; inList = false; }
+      if (!line) continue;
+      const header = line.match(/^#{1,6}\s+(.*)$/);
+      if (header) {
+        html += '<p class="vw-md-head">' + inlineMarkdown(header[1]) + "</p>";
+      } else {
+        html += "<p>" + inlineMarkdown(line) + "</p>";
+      }
+    }
+    if (inList) html += "</ul>";
+    return html;
+  }
+
+  function seekVideo(seconds) {
+    const video = document.querySelector("video");
+    if (video) {
+      video.currentTime = seconds;
+      if (typeof video.play === "function") video.play();
+    }
+  }
+
+  function wireTimestamps(container) {
+    container.querySelectorAll("a.vw-ts").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        const seconds = parseTimestamp(el.dataset.ts || "");
+        if (seconds != null) seekVideo(seconds);
+      });
+    });
+  }
+
   function renderCitations(container, citations) {
     if (!Array.isArray(citations) || citations.length === 0) return;
     const wrap = document.createElement("div");
@@ -194,7 +273,8 @@
         }
 
         loadingMsg.className = "vw-msg vw-assistant";
-        loadingMsg.textContent = response.answer;
+        loadingMsg.innerHTML = renderMarkdown(response.answer);
+        wireTimestamps(loadingMsg);
         renderCitations(loadingMsg, response.citations);
         conversationHistory.push({ role: "assistant", content: response.answer });
 

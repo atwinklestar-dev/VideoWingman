@@ -139,6 +139,49 @@ ytd-app.vw-pushed {
   color: #e0e0f0;
 }
 
+/* ── Rendered markdown inside assistant messages ── */
+.vw-msg.vw-assistant p {
+  margin: 0 0 8px;
+}
+
+.vw-msg.vw-assistant p:last-child {
+  margin-bottom: 0;
+}
+
+.vw-msg.vw-assistant p.vw-md-head {
+  font-weight: 600;
+  color: #fff;
+}
+
+.vw-msg.vw-assistant ul {
+  margin: 4px 0 8px;
+  padding-left: 18px;
+}
+
+.vw-msg.vw-assistant li {
+  margin-bottom: 4px;
+}
+
+.vw-msg.vw-assistant strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.vw-msg.vw-assistant a {
+  color: #8ab4f8;
+}
+
+a.vw-ts {
+  color: #8ab4f8;
+  cursor: pointer;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+
+a.vw-ts:hover {
+  text-decoration: underline;
+}
+
 .vw-msg.vw-loading {
   background: #1a1a2e;
   border: 1px solid #2d2d4e;
