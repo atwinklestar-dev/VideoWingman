@@ -1,0 +1,306 @@
+/* ── Push YouTube layout left when sidebar is open ── */
+ytd-app.vw-pushed {
+  margin-right: 360px !important;
+  transition: margin-right 0.3s ease;
+}
+
+/* ── VideoWingman Sidebar ── */
+
+#vw-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  height: 100vh;
+  background: #0f0f0f;
+  color: #f1f1f1;
+  font-family: "Roboto", system-ui, sans-serif;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+#vw-sidebar.vw-open {
+  transform: translateX(0);
+}
+
+/* ── Header ── */
+#vw-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #272727;
+  flex-shrink: 0;
+}
+
+#vw-header h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #f1f1f1;
+  letter-spacing: 0.3px;
+}
+
+#vw-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+#vw-close:hover {
+  color: #f1f1f1;
+  background: #272727;
+}
+
+/* ── Suggested questions ── */
+#vw-suggestions {
+  padding: 12px 16px;
+  border-bottom: 1px solid #272727;
+  flex-shrink: 0;
+}
+
+#vw-suggestions p {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vw-chip {
+  display: inline-block;
+  background: #272727;
+  border: 1px solid #3f3f3f;
+  color: #f1f1f1;
+  border-radius: 16px;
+  padding: 6px 12px;
+  margin: 0 6px 6px 0;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.vw-chip:hover {
+  background: #3f3f3f;
+  border-color: #717171;
+}
+
+/* ── Messages ── */
+#vw-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#vw-messages::-webkit-scrollbar {
+  width: 4px;
+}
+#vw-messages::-webkit-scrollbar-thumb {
+  background: #3f3f3f;
+  border-radius: 2px;
+}
+
+.vw-msg {
+  max-width: 90%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  line-height: 1.5;
+  font-size: 13px;
+  word-wrap: break-word;
+}
+
+.vw-msg.vw-user {
+  background: #272727;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.vw-msg.vw-assistant {
+  background: #1a1a2e;
+  border: 1px solid #2d2d4e;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  color: #e0e0f0;
+}
+
+.vw-msg.vw-loading {
+  background: #1a1a2e;
+  border: 1px solid #2d2d4e;
+  align-self: flex-start;
+  color: #717171;
+  font-style: italic;
+}
+
+.vw-msg.vw-error {
+  background: #2e1a1a;
+  border: 1px solid #4e2d2d;
+  align-self: flex-start;
+  color: #f0c0c0;
+  border-bottom-left-radius: 4px;
+}
+
+.vw-error-btn {
+  display: inline-block;
+  margin-top: 8px;
+  background: none;
+  border: 1px solid #c0392b;
+  color: #f0a0a0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.vw-error-btn:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+/* ── Sources / citations ── */
+.vw-sources {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #2d2d4e;
+}
+
+.vw-sources-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.vw-sources a {
+  display: block;
+  color: #8ab4f8;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vw-sources a:hover {
+  text-decoration: underline;
+}
+
+/* ── Input area ── */
+#vw-input-area {
+  padding: 12px 16px;
+  border-top: 1px solid #272727;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+#vw-input {
+  flex: 1;
+  background: #272727;
+  border: 1px solid #3f3f3f;
+  border-radius: 20px;
+  color: #f1f1f1;
+  font-size: 13px;
+  padding: 8px 14px;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  max-height: 100px;
+  overflow-y: auto;
+  line-height: 1.4;
+}
+
+#vw-input::placeholder {
+  color: #717171;
+}
+
+#vw-input:focus {
+  border-color: #717171;
+}
+
+#vw-send {
+  background: #ff0000;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  align-self: flex-end;
+  transition: background 0.15s;
+}
+
+#vw-send:hover {
+  background: #cc0000;
+}
+
+#vw-send:disabled {
+  background: #3f3f3f;
+  cursor: not-allowed;
+}
+
+/* ── Toggle button (shown when sidebar is closed) ── */
+#vw-toggle {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  padding: 12px 8px;
+  cursor: pointer;
+  z-index: 9998;
+  font-size: 18px;
+  writing-mode: vertical-rl;
+  letter-spacing: 1px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+#vw-toggle:hover {
+  background: #cc0000;
+}
+
+#vw-toggle.vw-hidden {
+  display: none;
+}
+
+/* ── Status bar ── */
+#vw-status {
+  padding: 6px 16px;
+  font-size: 11px;
+  color: #717171;
+  border-bottom: 1px solid #272727;
+  flex-shrink: 0;
+}
+
+#vw-status.vw-ready {
+  color: #4caf50;
+}
